@@ -1,0 +1,108 @@
+
+:root {
+    --primary-color: #4A90E2; /* Blue-inspired primary color */
+    --secondary-color: #50E3C2; /* Complementary aqua color */
+    --background-color: #0B3D91; /* Deep blue background */
+    --text-color: #E1F5FE; /* Light blue-white text color */
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 2rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+}
+
+p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-out 0.6s forwards;
+}
+
+.cta-button {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-color);
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-out 0.9s forwards;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.1;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    p {
+        font-size: 1rem;
+    }
+}
