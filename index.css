@@ -6,7 +6,7 @@
     --primary-color: #3498db;
     --secondary-color: #2ecc71;
     --accent-color: #e74c3c;
-    --background-color: #f8f9fa;
+    --background-color: #474747;
     --text-color: #333333;
     --light-text-color: #ffffff;
     --dark-text-color: #222222;
@@ -40,6 +40,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--heading-font);
     font-weight: 700;
     line-height: 1.2;
+    color: var(--light-text-color);
     margin-bottom: calc(var(--spacing-unit) * 3);
     letter-spacing: -0.02em;
 }
@@ -53,6 +54,7 @@ h6 { font-size: 1.2rem; }
 
 p {
     margin-bottom: calc(var(--spacing-unit) * 3);
+    color: var(--light-text-color);
     max-width: 65ch;
 }
 
