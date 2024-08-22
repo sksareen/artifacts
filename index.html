@@ -7,83 +7,213 @@
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="index.css" rel="stylesheet">
     <link rel="icon" href="icon.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        #snake-game {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s;
+        }
+        #game-canvas {
+            display: block;
+            background-color: #000;
+            border: 6px solid #fff;
+            border-radius: 20px;
+            transition: all 0.5s;
+        }
+        h1 {
+            cursor: help;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">JustBuildApps</div>
-        <h1>The Future of App Development</h1>
-        <p>A revolutionary platform that's about to change the way you build applications. Get ready for a seamless, AI-powered development experience like never before.</p>
-        <button class="cta-btn">Stay Informed</button>
+        <div class="container">
+            <div class="container">
+             <h1 title="Press Cmd+Enter (Mac) or Ctrl+Enter (Windows) for a surprise!"> JustBuildApps </h1>
+             <h2 title="For real! Press Cmd+Enter or Ctrl+Enter for fun!">Do you ever...</h2>
+            <div class="dynamic-text-container" title="For real! Press Cmd+Enter or Ctrl+Enter for fun!">
+                <span id="dynamic-text" class="dynamic-text"></span>
+                <span class="cursor">|</span>
+            </div>
+            <a href="https://app.youform.com/forms/xyujyyg3" target="_blank" rel="noopener noreferrer">
+                <button class="cta-btn" >Join Waitlist</button>
+            </a>
+        </div>
+        <footer>
+            <div class="social-icons">
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <i class="fa-brands fa-square-x-twitter"></i>
+                </a>
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+                    <i class="fa-brands fa-discord"></i>
+                </a>
+            </div>
+            <p>&copy; 2024 JustBuildApps. All rights reserved.</p>
+        </footer>
+    
+    <div id="snake-game">
+        <canvas id="game-canvas" width="400" height="400"></canvas>
     </div>
-    <canvas class="background-animation"></canvas>
     
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const canvas = document.querySelector('.background-animation');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            const particles = [];
-            const particleCount = 100;
-            
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 5 + 1;
-                    this.speedX = Math.random() * 3 - 1.5;
-                    this.speedY = Math.random() * 3 - 1.5;
+        console.log("%cPssst! Try Cmd+Enter (Mac) or Ctrl+Enter (Windows) for a surprise!", "font-size: 20px; font-weight: bold; color: #4CAF50;");
+
+        // Dynamic text animation
+        const phrases = [
+            // "Got a billion-dollar app idea but can't code?",
+            "Yell at your phone,   'Why isn't there an app for this?!'",
+            "Dream in apps but wake up in 404 errors?",
+            "Wanna build an app but think HTML is a sandwich?",
+            "Think 'I could've made a better app than this'?"
+        ];
+
+        let currentPhraseIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+        const typingSpeed = 40;
+        const deletingSpeed = 15;
+        const pauseBetweenPhrases = 2000;
+
+        function typeText() {
+            const currentPhrase = phrases[currentPhraseIndex];
+            const dynamicText = document.getElementById('dynamic-text');
+
+            if (isDeleting) {
+                dynamicText.textContent = currentPhrase.substring(0, currentCharIndex - 1);
+                currentCharIndex--;
+            } else {
+                dynamicText.textContent = currentPhrase.substring(0, currentCharIndex + 1);
+                currentCharIndex++;
+            }
+
+            if (!isDeleting && currentCharIndex === currentPhrase.length) {
+                isDeleting = true;
+                setTimeout(typeText, pauseBetweenPhrases);
+            } else if (isDeleting && currentCharIndex === 0) {
+                isDeleting = false;
+                currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                setTimeout(typeText, typingSpeed);
+            } else {
+                setTimeout(typeText, isDeleting ? deletingSpeed : typingSpeed);
+            }
+        }
+
+        // Start the typing animation
+        typeText();
+
+        // Snake game code
+        const snakeGame = {
+            canvas: null,
+            ctx: null,
+            snake: [],
+            food: {},
+            direction: 'right',
+            gameLoopInterval: null,
+
+            init() {
+                this.canvas = document.getElementById('game-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.snake = [{x: 200, y: 200}];
+                this.placeFood();
+                document.addEventListener('keydown', this.changeDirection.bind(this));
+            },
+
+            placeFood() {
+                this.food = {
+                    x: Math.floor(Math.random() * 20) * 20,
+                    y: Math.floor(Math.random() * 20) * 20
+                };
+            },
+
+            changeDirection(event) {
+                const key = event.key;
+                if (key === 'ArrowUp' && this.direction !== 'down') this.direction = 'up';
+                if (key === 'ArrowDown' && this.direction !== 'up') this.direction = 'down';
+                if (key === 'ArrowLeft' && this.direction !== 'right') this.direction = 'left';
+                if (key === 'ArrowRight' && this.direction !== 'left') this.direction = 'right';
+            },
+
+            move() {
+                const head = {...this.snake[0]};
+                switch(this.direction) {
+                    case 'up': head.y -= 20; break;
+                    case 'down': head.y += 20; break;
+                    case 'left': head.x -= 20; break;
+                    case 'right': head.x += 20; break;
                 }
+                this.snake.unshift(head);
+                if (head.x === this.food.x && head.y === this.food.y) {
+                    this.placeFood();
+                } else {
+                    this.snake.pop();
+                }
+            },
+
+            checkCollision() {
+                const head = this.snake[0];
+                return (
+                    head.x < 0 || head.x >= 400 ||
+                    head.y < 0 || head.y >= 400 ||
+                    this.snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)
+                );
+            },
+
+            draw() {
+                this.ctx.fillStyle = '#000';
+                this.ctx.fillRect(0, 0, 400, 400);
                 
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    
-                    if (this.size > 0.2) this.size -= 0.1;
-                }
+                this.ctx.fillStyle = '#0f0';
+                this.snake.forEach(segment => {
+                    this.ctx.fillRect(segment.x, segment.y, 20, 20);
+                });
                 
-                draw() {
-                    ctx.fillStyle = 'rgba(255,255,255,0.8)';
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
+                this.ctx.fillStyle = '#f00';
+                this.ctx.fillRect(this.food.x, this.food.y, 20, 20);
+            },
+
+            gameLoop() {
+                this.move();
+                if (this.checkCollision()) {
+                    alert('Game Over!');
+                    this.stop();
+                    return;
+                }
+                this.draw();
+            },
+
+            start() {
+                this.init();
+                this.gameLoopInterval = setInterval(() => this.gameLoop(), 100);
+            },
+
+            stop() {
+                clearInterval(this.gameLoopInterval);
+                this.snake = [{x: 200, y: 200}];
+                this.direction = 'right';
+            }
+        };
+
+        // Event listener for Cmd+Enter or Ctrl+Enter
+        document.addEventListener('keydown', function(event) {
+            if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+                event.preventDefault();
+                const gameDiv = document.getElementById('snake-game');
+                if (gameDiv.style.display === 'none' || gameDiv.style.display === '') {
+                    gameDiv.style.display = 'flex';
+                    snakeGame.start();
+                } else {
+                    gameDiv.style.display = 'none';
+                    snakeGame.stop();
                 }
             }
-            
-            function init() {
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
-            }
-            
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = 0; i < particles.length; i++) {
-                    particles[i].update();
-                    particles[i].draw();
-                    
-                    if (particles[i].size <= 0.2) {
-                        particles.splice(i, 1);
-                        i--;
-                        particles.push(new Particle());
-                    }
-                }
-                requestAnimationFrame(animate);
-            }
-            
-            init();
-            animate();
-            
-            window.addEventListener('resize', () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            });
-        });
-        
-        document.querySelector('.cta-button').addEventListener('click', function() {
-            alert('Thank you for your interest! We\'ll keep you updated on our launch.');
         });
     </script>
 </body>
