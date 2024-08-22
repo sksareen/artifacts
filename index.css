@@ -76,7 +76,11 @@ h1 {
 }
 h2 { font-size: 2.8rem; }
 h3 { font-size: 2.2rem; }
-h4 { font-size: 1.8rem; }
+h4 {
+    font-size: 1.2rem; 
+    font-weight: 400;
+    font-family: var(--special-font);
+}
 h5 { font-size: 1.4rem; }
 h6 { font-size: 1.2rem; }
 
@@ -186,7 +190,7 @@ p {
     background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
     color: var(--light-text-color);
     border: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.55);
     position: relative;
     overflow: hidden;
 }
@@ -198,8 +202,8 @@ p {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(150deg, transparent, rgba(159, 210, 193, 0.19), transparent);
-    transition: all 0.4s;
+    background: linear-gradient(150deg, transparent, rgba(159, 210, 193, 0.22), transparent);
+    transition: all 0.5s;
 }
 
 .cta-btn:hover:before {
@@ -207,8 +211,8 @@ p {
 }
 
 .cta-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(-3px) scale(1.09);
+    box-shadow: 0 6px 60px rgba(255, 255, 255, 0.9);
 }
 
 /* Features Section */
