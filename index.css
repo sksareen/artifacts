@@ -359,12 +359,52 @@ p {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    h1 { font-size: 4rem; }
-    h2 { font-size: 2.2rem; }
-    h3 { font-size: 1.8rem; }
+    h1 { font-size: 3rem; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.5rem; }
+    h4 { font-size: 1rem; }
 
-    .hero-title { font-size: 2.5rem; }
-    .hero-subtitle { font-size: 1rem; }
+    .hero-title { font-size: 2rem; }
+    .hero-subtitle { 
+        font-size: 1rem; 
+        max-width: 90%;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+
+    .dynamic-text {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        font-weight: bold;
+        color: var(--light-text-color);
+    }
+
+    .cursor {
+        font-weight: normal;
+        font-size: clamp(1.7rem, 5.5vw, 2.2rem);
+        animation: blink .8s infinite;
+        color: #fff;
+    }
+
+    .cta-btn {
+        padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+        font-size: 0.9rem;
+    }
+
+    .cta-title {
+        font-size: 2rem;
+    }
+
+    .testimonial-text {
+        font-size: 1rem;
+    }
 
     .nav-menu {
         display: none; /* Replace with mobile menu toggle */
@@ -387,10 +427,32 @@ p {
     .features-grid {
         grid-template-columns: 1fr;
     }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.2rem; }
+    h4 { font-size: 0.9rem; }
+
+    .hero-title { font-size: 1.8rem; }
+    .hero-subtitle { font-size: 0.9rem; }
+
+    .dynamic-text {
+        font-size: 1.2rem;
+    }
+
+    .cursor {
+        font-size: 1.4rem;
+    }
 
     .cta-btn {
-        padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 4);
-        font-size: 1rem;
+        padding: calc(var(--spacing-unit) * 1.2) calc(var(--spacing-unit) * 2.5);
+        font-size: 0.8rem;
+    }
+
+    .cta-title {
+        font-size: 1.8rem;
     }
 }
 
@@ -439,19 +501,6 @@ a:focus, button:focus, input:focus, textarea:focus {
     justify-content: center;
     margin-bottom: 20px;    
     margin-top: 20px;
-}
-
-.dynamic-text {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--light-text-color);
-}
-
-.cursor {
-    font-weight: normal;
-    font-size: 2.2rem;
-    animation: blink .8s infinite;
-    color: #fff;
 }
 
 @keyframes blink {
