@@ -207,8 +207,8 @@ p {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(150deg, transparent, rgba(159, 210, 193, 0.22), transparent);
-    transition: all 0.5s;
+    background: linear-gradient(150deg, transparent, rgba(159, 210, 193, 0.3), transparent);
+    transition: all 0.3s;
 }
 
 .cta-btn:hover:before {

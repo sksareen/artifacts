@@ -1,0 +1,36 @@
+graph TD
+    subgraph JustBuildApps Application
+    A[User] -->|Interacts with| B(React Frontend)
+    B -->|1. User inputs app description| C{ChatInterface}
+    C -->|2. Makes API call| D(Express Backend)
+    D -->|3. Sends prompt| E[AI Service - Claude]
+    E -->|4. Returns generated code| D
+    D -->|5. Sends generated code| C
+    C -->|6. Passes code| F[App Preview]
+    F -->|7. Renders component| A
+
+    C -.-> G[claudeService.js]
+    C -.-> H[appGenerator.js]
+    C -.-> I[validation.js]
+    C -.-> J[appStorage.js]
+
+    D -.-> K[server.js]
+    D -.-> L[aiConfig.js]
+
+    %% Improvement suggestions
+    M[Caching]
+    N[User Auth]
+    O[Error Handling]
+    P[More AI Models]
+    Q[Code Parsing]
+    end
+
+    classDef main fill:#f5f5f5,stroke:#333,stroke-width:2px;
+    classDef component fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef service fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
+    classDef improvement fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+
+    class JustBuildApps main;
+    class B,C,D,F component;
+    class E,G,H,I,J,K,L service;
+    class M,N,O,P,Q improvement;
