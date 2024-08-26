@@ -1,0 +1,125 @@
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+}
+
+
+main {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  height: 100%;
+}
+
+.chat-container, .preview-container {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.chat-interface {
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  align-items: center;
+}
+
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.message {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.message.user {
+  background-color: #e6f2ff;
+  align-self: flex-end;
+}
+
+.message.ai {
+  background-color: #f0f0f0;
+  align-self: flex-start;
+}
+
+form-container {
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+input {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #61dafb, #4CAF50);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.error {
+  color: red;
+  margin-bottom: 1rem;
+}
+
+.loading {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.modifications {
+  margin-top: 1rem;
+}
+
+.modification-input {
+  display: flex;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+.modification-input input {
+  flex: 1;
+  margin-right: 0.5rem;
+  border-radius: 5px;
+}
+
+.save-share {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+.save-share button {
+  padding: 0.5rem 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.4s ease;
+}
+
+.save-share button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
