@@ -1,0 +1,115 @@
+:root {
+    --primary-color: #00F2EA; /* TikTok cyan */
+    --secondary-color: #FF0050; /* TikTok pink */
+    --background-color: #000000;
+    --text-color: #FFFFFF;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+}
+
+.logo {
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 2rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: titlePulse 2s infinite alternate;
+}
+
+p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.cta-btn {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-color);
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    animation: btnPulse 2s infinite alternate;
+}
+
+.cta-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(255, 0, 80, 0.4);
+}
+
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(0, 242, 234, 0.2) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(255, 0, 80, 0.2) 0%, transparent 20%);
+    animation: backgroundShift 10s ease-in-out infinite alternate;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes titlePulse {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+@keyframes buttonPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+@keyframes backgroundShift {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+}
+
+@media (max-width: 768px) {
+    .logo { font-size: 3rem; }
+    h1 { font-size: 2.5rem; }
+    p { font-size: 1rem; }
+    .cta-button { padding: 12px 30px; font-size: 1rem; }
+}
