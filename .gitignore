@@ -25,3 +25,4 @@ yarn-error.log*
 ITERATIONS.md
 TEACHME.md
 .vercel
+.prettierc
