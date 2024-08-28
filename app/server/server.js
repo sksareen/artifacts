@@ -63,7 +63,7 @@ app.post('/api/generate-app', async (req, res) => {
       
       try {
         const stream = await anthropic.messages.create({
-          model: "claude-3-haiku-20240307",
+          model: "claude-3-5-sonnet-20240620",
           max_tokens: 2000,
           temperature: 0.2,
           system: systemPrompt.systemPrompt,

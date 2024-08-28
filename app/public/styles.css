@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;700&family=Poppins:wght@300;400;700&family=Outfit:wght@300;400;700&display=swap');
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(135deg, #52aff7, hsl(288, 77%, 69%));
-  color: #0f0f0f;
+  background-color: #f6f9fc;
+  color: #1a1f36;
 }
 
 #root {
@@ -28,20 +28,18 @@ body {
 
 header {
   text-align: center;
-  align-self: center;
-  padding: .1rem 7rem;
-  border-radius: 7px;
-  margin: 20px;
+  padding: 2rem 0;
 }
 
 header h1 {
-  font-size: 3rem;
-  margin: 0.5rem;
+  font-size: 2.5rem;
+  margin: 0.5rem 0;
+  color: #0a2540;
 }
 
 header p {
   font-size: 1.2rem;
-  opacity: 0.8;
+  color: #425466;
 }
 
 main {
@@ -60,11 +58,10 @@ h2, h3 {
 }
 
 .chat-interface {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 1000px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
 }
 
 .server-status {
@@ -78,17 +75,19 @@ h2, h3 {
 }
 
 .message {
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 4px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
 }
 
 .message.user {
-  background-color: #e6f3ff;
+  background-color: #f7fafc;
+  border: 1px solid #e3e8ee;
 }
 
 .message.ai {
-  background-color: #f0f0f0;
+  background-color: #ffffff;
+  border: 1px solid #e3e8ee;
 }
 
 .form-container {
@@ -102,28 +101,21 @@ h2, h3 {
 
 .form-container input[type="text"],
 .form-container button {
-  width: 100%;
-  padding: 0.8rem;
-  margin-bottom: 1rem;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 25px;
+  border-radius: 6px;
+}
 
+.form-container input[type="text"] {
+  border: 1px solid #e3e8ee;
 }
 
 .form-container button {
-  background-color: #27ae60;
-  color: white;
-  width: 40%;
-  font-weight: bold;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  background-color: #635bff;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
 .form-container button:hover {
-  background-color: #2ecc71;
-  transition: all 0.3s ease;
+  background-color: #0a2540;
 }
 
 .app-preview {
@@ -133,14 +125,13 @@ h2, h3 {
 }
 
 .preview-container {
-  display: block;
-  width: 100%;
-  border: 1px solid #ccc;
-  background-color: #fffdfd;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  min-height: 200px;
-  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #e3e8ee;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .error {
@@ -148,13 +139,9 @@ h2, h3 {
 }
 
 .raw-code {
-  width: 100%;
-  overflow-x: auto;
-  background-color: #f5f5f5;
-  padding: 1rem;
-  border-radius: 4px;
-  box-sizing: border-box;
-  color: #0f0f0f;
+  background-color: #f7fafc;
+  border: 1px solid #e3e8ee;
+  border-radius: 6px;
 }
 
 .modifications,
@@ -185,17 +172,17 @@ h2, h3 {
 }
 
 footer {
-  background-color: rgba(0, 0, 0, 0.1);
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  margin-top: auto;
+  background-color: #0a2540;
+  color: #f7fafc;
 }
 
 footer a {
-  color: white;
-  text-decoration: none;
-  margin: 0 10px;
+  color: #f7fafc;
+  transition: color 0.2s ease;
+}
+
+footer a:hover {
+  color: #635bff;
 }
 
 .social-icons {
@@ -220,3 +207,21 @@ footer a {
   padding: 1rem;
   border-radius: 5px;
 }
+
+.copy-feedback {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.copy-feedback.show {
+  opacity: 1;
+}
+

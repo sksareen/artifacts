@@ -1,22 +1,30 @@
 /* Base styling for the app */
 .App {
   text-align: center;
-  font-family: 'Google Sans', sans-serif;
-  color: #0003f8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  color: #1a1f36;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* Styling for the app logo */
 .App-logo {
-  height: 40vmin;
+  height: 60px;
   pointer-events: none;
-  border-radius: 100px;
-  border: 3px solid #0003f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.App-logo:hover {
+  transform: translateY(-2px);
 }
 
 /* Animation for the app logo */
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: App-logo-float infinite 3s ease-in-out;
   }
 }
 
@@ -27,32 +35,31 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #f8f9fa; /* Light background with a hint of blue */
-  border-radius: 40px;
-  padding: 20px;
-  font-size: calc(10px + 2vmin);
-  box-shadow: 0 4px 8px rgba(0, 3, 248, 0.2); /* Shadow with the theme color */
+  background-color: #f6f9fc;
+  padding: 40px;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 /* Styling for the app links */
 .App-link {
-  color: #0003f8;
+  color: #635bff;
   text-decoration: none;
   font-weight: 500;
+  transition: all 0.2s ease;
+  padding: 8px 16px;
+  border-radius: 20px;
 }
 
 .App-link:hover {
-  text-decoration: underline;
+  color: #ffffff;
+  background-color: #635bff;
 }
 
-/* Keyframes for logo spin animation */
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Keyframes for logo float animation */
+@keyframes App-logo-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 /* Styling for server status container */
@@ -60,6 +67,40 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0003f8;
-  margin-top: 20px;
+  color: #425466;
+  margin-top: 30px;
+  padding: 16px 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.server-status:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Center everything in the preview container */
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f6f9fc;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .App {
+    padding: 0 10px;
+  }
+  
+  .App-header {
+    padding: 20px;
+  }
+  
+  .server-status {
+    padding: 12px 18px;
+  }
 }
