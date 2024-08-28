@@ -34,6 +34,7 @@ export const extractImports = (code) => {
   console.log('Cleaned code:', cleanedCode.substring(0, 100) + '...');
   
   const importRegex = /import\s+(?:(?:\*\s+as\s+)?\w+|\{\s*[\w\s,]+\})\s+from\s+['"]([^'"]+)['"]/g;
+  console.log('Import regex:', importRegex);
   const imports = [];
   let match;
   

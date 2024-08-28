@@ -26,10 +26,14 @@ app.use(cors({
 
 app.use(express.json());
 
-const validateJBArtifact = (code) => {
-    const regex = /^<jbartifact[^>]*>[\s\S]*<\/jbartifact>$/;
-    return regex.test(code.trim());
-  };
+const validateAndCleanJBArtifact = (code) => {
+  const regex = /^<jbartifact[^>]*>([\s\S]*)<\/jbartifact>$/;
+  const match = code.trim().match(regex);
+  if (match) {
+    return { isValid: true, cleanedCode: match[1].trim() };
+  }
+  return { isValid: false, cleanedCode: '' };
+};
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK' });
@@ -84,8 +88,10 @@ app.post('/api/generate-app', async (req, res) => {
             generatedCode += chunk.delta.text;
           }
         }
-
-        isValidCode = validateJBArtifact(generatedCode);
+        
+        resp = validateAndCleanJBArtifact(generatedCode);
+        isValidCode = resp.isValid
+        generatedCode = resp.cleanedCode
         if (!isValidCode) {
           console.log(`Generated code invalid, retrying (${retries + 1}/${maxRetries})`);
           retries++;

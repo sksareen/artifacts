@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
 import { transform } from '@babel/standalone';
-import * as Babel from '@babel/standalone';
 import { getDependency, extractImports } from '../utils/dynamicImports';
 
 const AppPreview = ({ code, initialProps = {} }) => {
@@ -14,32 +13,34 @@ const AppPreview = ({ code, initialProps = {} }) => {
 
   const transformCode = useMemo(() => (code) => {
     // Add React import if it's missing
-    const reactImport = "import React, { useState, useEffect } from 'react';\n";
+    const reactImport = "import React from 'react';\n";
     const codeWithReactImport = code.includes('import React') ? code : reactImport + code;
-
-    const transformedCode = Babel.transform(codeWithReactImport, {
-      presets: ['react'],
-      plugins: [
-        'proposal-class-properties',
-        'proposal-object-rest-spread',
-        ['transform-modules-umd', { globals: { react: 'React' } }]
-      ]
-    }).code;
-
-    return `
-      ${transformedCode}
-      (function() {
-        if (typeof App !== 'undefined') {
-          window.App = App;
-        } else if (typeof exports !== 'undefined') {
-          window.App = exports.default || exports.App || Object.values(exports)[0];
-        }
-        if (!window.App) {
-          throw new Error('App component not found');
-        }
-        console.log('Transformed App:', window.App);
-      })();
-    `;
+  
+    try {
+      const transformedCode = transform(codeWithReactImport, {
+        presets: ['react', 'env'],
+        plugins: ['proposal-class-properties', 'proposal-object-rest-spread']
+      }).code;
+  
+      return `
+        ${transformedCode}
+        (function() {
+          if (typeof App !== 'undefined') {
+            window.App = App;
+          } else if (typeof exports !== 'undefined') {
+            window.App = exports.default || exports.App || Object.values(exports)[0];
+          }
+          if (!window.App) {
+            throw new Error('App component not found');
+          }
+          console.log('Transformed App:', window.App);
+        })();
+      `;
+    } catch (error) {
+      console.error('Babel transformation error:', error);
+      setError(`Babel Error: ${error.message}`);
+      throw error;
+    }
   }, []);
 
   const validateAppComponent = (code) => {
@@ -49,7 +50,64 @@ const AppPreview = ({ code, initialProps = {} }) => {
     }
   };
 
+  const DynamicComponent = ({ code }) => {
+    const [Component, setComponent] = useState(null);
+  
+    useEffect(() => {
+      const loadComponent = async () => {
+        try {
+          if (!code) return;
+          
+          // Transform JSX to JavaScript
+          const transformedCode = transform(code, {
+            presets: ['react'],
+            plugins: ['transform-modules-commonjs']
+          }).code;
+  
+          // Wrap the transformed code in a function that provides necessary context
+          const wrappedCode = `
+          return function createComponent(React) {
+            const require = (moduleName) => {
+              if (moduleName === 'react') return React;
+              throw new Error(\`Unable to require module: \${moduleName}\`);
+            };
+            let exports = {};
+            const module = { exports };
+            ${transformedCode}
+            return module.exports.__esModule ? module.exports.default : module.exports;
+          }
+        `;
+  
+          // Create a function from the wrapped code
+          const createComponent = new Function(wrappedCode)();
+  
+          // Execute the function with the React object
+          const Component = createComponent(React);
+          setComponent(() => Component);
+        } catch (error) {
+          console.error('Error loading component:', error);
+        }
+      };
+  
+      loadComponent();
+    }, [code]);
+  
+    if (!Component) {
+      return <div>Loading component...</div>;
+    }
+  
+    return (
+      <Suspense fallback={<div>Rendering component...</div>}>
+        <Component />
+      </Suspense>
+    );
+  };
+
   const compileAndRender = async () => {
+    return <DynamicComponent code={code} />;
+  }
+
+  const compileAndRender2 = async () => {
     setError(null);
     if (!code) return;
 
@@ -133,8 +191,9 @@ const AppPreview = ({ code, initialProps = {} }) => {
   return (
     <div className="app-preview">
       <h2>App Preview</h2>
-      <div className="preview-container" ref={iframeRef}>
+      <div className="preview-container">
         {error && <div className="error">{error}</div>}
+        <DynamicComponent code={code} />;
       </div>
       <h3>Generated Code</h3>
       <pre className="raw-code">{code}</pre>

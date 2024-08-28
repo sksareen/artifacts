@@ -20,12 +20,15 @@
 
 ---
 
-## Iteration 2
+## Aug 27, 2024
 
 ### What Went Well
 
+- Styling is centered and responsive
+- Server and API connections work as expected
 -
 
-### What Didn't Go Well
+### What Didn't
 
--
+- Not rendering in app preview
+- syntax confusion with the returned and cleaned code
