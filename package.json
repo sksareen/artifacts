@@ -4,12 +4,12 @@
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
     "@babel/preset-react": "^7.24.7",
-    "react-app-rewired": "^2.1.8" // Add this line
+    "react-app-rewired": "^2.1.8"
   },
   "scripts": {
-    "start": "react-app-rewired start", // Update this line
-    "build": "react-app-rewired build", // Update this line
-    "test": "react-app-rewired test", // Update this line
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   }
 }
