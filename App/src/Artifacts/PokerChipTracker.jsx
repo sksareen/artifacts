@@ -158,85 +158,80 @@ const PokerChipTracker = () => {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  // ... (styles object remains the same)
-
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>Multi-Device Poker Chip Tracker</h1>
+    <div>
+      <h1>Multi-Device Poker Chip Tracker</h1>
       
       {!isHost && peers.length === 0 && (
-        <div style={styles.connectionControls}>
-          <button style={styles.button} onClick={createGame}>Create Game</button>
+        <div>
+          <button onClick={createGame}>Create Game</button>
           <input
-            style={styles.input}
             type="text"
             value={joinId}
             onChange={(e) => setJoinId(e.target.value)}
             placeholder="Enter host's ID"
           />
-          <button style={styles.button} onClick={joinGame}>Join Game</button>
+          <button onClick={joinGame}>Join Game</button>
         </div>
       )}
       
       {isHost && (
-        <div style={styles.hostInfo}>
+        <div>
           Your Host ID: {peerId} (Share this with others to join)
         </div>
       )}
 
-      <div style={styles.timerContainer}>
+      <div>
         <div>
-          <div style={styles.timerDisplay}>{formatTime(blindTimer.time)}</div>
-          <div style={styles.blindDisplay}>Blinds: {blindTimer.smallBlind}/{blindTimer.bigBlind}</div>
+          <div>{formatTime(blindTimer.time)}</div>
+          <div>Blinds: {blindTimer.smallBlind}/{blindTimer.bigBlind}</div>
         </div>
-        <button style={styles.button} onClick={() => setIsTimerRunning(!isTimerRunning)}>
+        <button onClick={() => setIsTimerRunning(!isTimerRunning)}>
           {isTimerRunning ? 'Pause Timer' : 'Start Timer'}
         </button>
       </div>
-      <div style={styles.potDisplay}>Pot: ${pot}</div>
-      <div style={styles.playerList}>
+      <div>Pot: ${pot}</div>
+      <div>
         {players.map((player) => (
-          <div key={player.id} style={styles.playerItem}>
-            <div style={styles.playerHeader}>
-              <span style={styles.playerName}>{player.name}</span>
-              <span style={styles.chipCount}>${player.chips}</span>
+          <div key={player.id}>
+            <div>
+              <span>{player.name}</span>
+              <span>${player.chips}</span>
             </div>
-            <div style={styles.chipButtons}>
+            <div>
               {chipDenominations.map(denomination => (
-                <button key={denomination} style={styles.button} onClick={() => updateChips(player.id, denomination)}>+{denomination}</button>
+                <button key={denomination} onClick={() => updateChips(player.id, denomination)}>+{denomination}</button>
               ))}
               {chipDenominations.map(denomination => (
-                <button key={-denomination} style={styles.button} onClick={() => updateChips(player.id, -denomination)}>-{denomination}</button>
+                <button key={-denomination} onClick={() => updateChips(player.id, -denomination)}>-{denomination}</button>
               ))}
               <input
                 type="number"
                 value={customChipAmount}
                 onChange={(e) => setCustomChipAmount(e.target.value)}
                 placeholder="Custom amount"
-                style={{...styles.input, width: '100px', marginRight: '5px'}}
               />
-              <button style={styles.button} onClick={() => {
+              <button onClick={() => {
                 updateChips(player.id, parseInt(customChipAmount) || 0);
                 setCustomChipAmount('');
               }}>Add/Remove</button>
-              <button style={{...styles.button, background: 'linear-gradient(145deg, #FF4500, #FF6347)'}} onClick={() => allIn(player.id)}>All-In</button>
-              <button style={{...styles.button, background: 'linear-gradient(145deg, #4169E1, #1E90FF)'}} onClick={() => settlePot(player.id)}>Win Pot</button>
+              <button onClick={() => allIn(player.id)}>All-In</button>
+              <button onClick={() => settlePot(player.id)}>Win Pot</button>
             </div>
           </div>
         ))}
       </div>
       <input
-        style={styles.input}
         type="text"
         value={newPlayerName}
         onChange={(e) => setNewPlayerName(e.target.value)}
         placeholder="New player name"
       />
-      <button style={styles.addButton} onClick={addPlayer}>Add Player</button>
-      <button style={styles.resetButton} onClick={resetGame}>Reset Game</button>
-      <div style={styles.historyContainer}>
+      <button onClick={addPlayer}>Add Player</button>
+      <button onClick={resetGame}>Reset Game</button>
+      <div>
         {history.map((entry, index) => (
-          <div key={index} style={styles.historyItem}>{entry}</div>
+          <div key={index}>{entry}</div>
         ))}
       </div>
     </div>

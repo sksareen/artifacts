@@ -10,6 +10,8 @@ const FantasyBuddy = () => {
   const [settings, setSettings] = useState({});
   const [notifications, setNotifications] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const apiKey = 'YOUR_YAHOO_API_KEY';
   const teamId = 'YOUR_TEAM_ID';
@@ -56,13 +58,25 @@ const FantasyBuddy = () => {
           headers: { Authorization: `Bearer ${apiKey}` }
         });
         setRecommendations(recommendationsResponse.data);
+
+        setLoading(false);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
+        setError(error);
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [apiKey, teamId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <div>
@@ -102,16 +116,16 @@ const FantasyBuddy = () => {
               <li key={notification.notification_id}>{notification.message}</li>
             ))}
           </ul>
-          <h3>Recommendations</h3>
-          <ul>
-            {recommendations.map(recommendation => (
-              <li key={recommendation.player_id}>
-                {recommendation.name}: {recommendation.rationale}
-              </li>
-            ))}
-          </ul>
         </div>
       )}
+      <h3>Recommendations</h3>
+      <ul>
+        {recommendations.map(recommendation => (
+          <li key={recommendation.player_id}>
+            {recommendation.name}: {recommendation.rationale}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

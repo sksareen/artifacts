@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmojiLang Translator</title>
+    <style>
+        :root {
+            --primary-color: #635bff;
+            --secondary-color: #0a2540;
+            --background-color: #f6f9fc;
+            --text-color: #425466;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .emoji-translator {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .emoji-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 12px;
+            padding: 20px;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .emoji-button {
+            font-size: 24px;
+            background-color: var(--background-color);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .emoji-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+
+        #textInput {
+            width: calc(100% - 40px);
+            padding: 16px;
+            margin: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+        }
+
+        #textInput:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        #translationResult, #exampleText {
+            margin: 0 20px 20px;
+            padding: 16px;
+            background-color: var(--background-color);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        #showMoreButton {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 12px 20px;
+            margin: 0 20px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        #showMoreButton:hover {
+            background-color: #524dff;
+        }
+
+        @media (max-width: 480px) {
+            .emoji-translator {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="emoji-translator">
+        <input type="text" id="textInput" placeholder="Enter text to translate...">
+        <div class="emoji-list" id="emojiList"></div>
+        <button id="showMoreButton">Show More</button>
+        <div id="translationResult"></div>
+        <div id="exampleText"></div>
+    </div>
+
+    <script>
+        const emojiDictionary = {
+            // Emotions and States
+            'happy': '😊', 'laugh': '😂', 'love': '😍', 'sad': '😭', 'angry': '😡',
+            'tired': '😴', 'sick': '😷', 'think': '🤔', 'cool': '', 'annoyed': '🙄',
+
+            // Actions and Behaviors
+            'approve': '👍', 'disapprove': '👎', 'agree': '🤝', 'strong': '💪', 'run': '🏃',
+            'tech': '📱', 'shop': '🛒', 'eat': '🍽️', 'sleep': '💤', 'talk': '🗣️',
+
+            // Problems and Challenges
+            'heartbreak': '💔', 'money': '💸', 'time': '⏰', 'no': '🚫', 'quiet': '🔇',
+            'stress': '🌡️', 'burden': '🏋️', 'search': '🔍', 'obstacle': '🚧', 'help': '🆘',
+
+            // Goals and Desires
+            'career': '💼', 'education': '🎓', 'relationship': '💞', 'home': '🏠', 'wealth': '💰',
+            'travel': '✈️', 'achieve': '🏆', 'balance': '🧘', 'grow': '🌱', 'create': '🎨',
+
+            // Objects and Concepts
+            'entertain': '📺', 'knowledge': '📚', 'food': '🍔', 'city': '🏙️', 'nature': '🌳',
+            'work': '💻', 'transport': '🚗', 'memory': '📷', 'music': '🎵', 'government': '🏛️',
+
+            // Time and Measurement
+            'wait': '⏳', 'soon': '🔜', 'repeat': '🔄', 'schedule': '📅', 'history': '🕰️',
+            'progress': '🚀', 'slow': '🐢', 'data': '📊', 'cycle': '🌓', 'number': '🔢',
+
+            // Relationships and Social
+            'friends': '👥', 'family': '👪', 'couple': '💑', 'compete': '🤼', 'support': '🤗',
+            'reject': '🙅', 'watch': '👀', 'selfie': '🤳', 'gossip': '🗨️', 'greet': '👋',
+
+            // Health and Wellness
+            'brain': '🧠', 'medicine': '💊', 'healthy': '🥗', 'rest': '💤', 'meditate': '🧘',
+            'vaccine': '💉', 'quit': '🚭', 'drink': '🍷', 'sun': '🌞', 'germ': '🦠',
+
+            // Technology and Innovation
+            'ai': '🤖', 'energy': '🔋', 'connect': '📡', 'secure': '🔒', 'data': '💾',
+            'game': '🕹️', 'mobile': '📲', 'print': '🖨️', 'search': '🔍', 'computer': '🖥️'
+        };
+
+        let currentEmojiCount = 30;
+        const emojiIncrement = 30;
+
+        function updateEmojiList() {
+            const list = document.getElementById('emojiList');
+            list.innerHTML = '';
+            Object.entries(emojiDictionary).slice(0, currentEmojiCount).forEach(([word, emoji]) => {
+                const button = document.createElement('button');
+                button.textContent = emoji;
+                button.title = word;
+                button.className = 'emoji-button';
+                button.onclick = () => {
+                    document.getElementById('textInput').value += emoji;
+                    translateText();
+                };
+                list.appendChild(button);
+            });
+            updateShowMoreButton();
+        }
+
+        function updateShowMoreButton() {
+            const showMoreButton = document.getElementById('showMoreButton');
+            if (currentEmojiCount >= Object.keys(emojiDictionary).length) {
+                showMoreButton.style.display = 'none';
+            } else {
+                showMoreButton.style.display = 'block';
+            }
+        }
+
+        function showMoreEmojis() {
+            currentEmojiCount += emojiIncrement;
+            updateEmojiList();
+        }
+
+        function translateText() {
+            const input = document.getElementById('textInput').value.toLowerCase();
+            const words = input.split(/\s+/);
+            const translated = words.map(word => {
+                const emojiEntry = Object.entries(emojiDictionary).find(([key, value]) => value === word);
+                return emojiEntry ? emojiEntry[0] : (emojiDictionary[word] || word);
+            });
+            document.getElementById('translationResult').textContent = translated.join(' ');
+            updateExampleText();
+        }
+
+        function updateExampleText() {
+            const exampleWords = Object.keys(emojiDictionary);
+            const randomWord = exampleWords[Math.floor(Math.random() * exampleWords.length)];
+            const emoji = emojiDictionary[randomWord];
+            document.getElementById('exampleText').textContent = `Example: "${randomWord}" translates to "${emoji}", and vice versa.`;
+        }
+
+        function init() {
+            updateEmojiList();
+            document.getElementById('textInput').oninput = translateText;
+            document.getElementById('showMoreButton').onclick = showMoreEmojis;
+            updateExampleText();
+        }
+
+        init();
+    </script>
+</body>
+</html>

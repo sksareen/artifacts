@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ThumbsUp, ThumbsDown, ChevronsRight, Linkedin, DollarSign, TrendingUp, User } from 'lucide-react';
-import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import { Card, CardContent, CardFooter, CardHeader } from 'button';
+import { Button } from 'ui/button';
 
 const mockApplicants = [
   {
@@ -37,66 +35,18 @@ const mockApplicants = [
   },
 ];
 
-const cardVariants = {
-  enter: (direction) => ({
-    x: direction > 0 ? 1000 : -1000,
-    opacity: 0,
-  }),
-  center: {
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction) => ({
-    x: direction < 0 ? 1000 : -1000,
-    opacity: 0,
-  }),
-};
-
-const ApplicantCard = ({ applicant, onReview, direction }) => {
+const ApplicantCard = ({ applicant, onReview }) => {
   const [showDetails, setShowDetails] = useState(false);
-  const x = useMotionValue(0);
-  const rotate = useTransform(x, [-300, 300], [-30, 30]);
-  const opacity = useTransform(x, [-300, -150, 0, 150, 300], [0, 1, 1, 1, 0]);
-
-  const background = useTransform(
-    x,
-    [-300, -150, 0, 150, 300],
-    [
-      'linear-gradient(135deg, #ff5f6d 0%, #ffc371 100%)',
-      'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-      'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)',
-      'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-      'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
-    ]
-  );
 
   return (
-    <motion.div
-      className="w-full h-full absolute cursor-grab active:cursor-grabbing"
-      variants={cardVariants}
-      custom={direction}
-      initial="enter"
-      animate="center"
-      exit="exit"
-      transition={{
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.2 }
-      }}
-      style={{ x, rotate, opacity }}
-      drag="x"
-      dragConstraints={{ left: 0, right: 0 }}
-      onDragEnd={(_, info) => {
-        if (info.offset.x > 100) onReview('approve');
-        else if (info.offset.x < -100) onReview('reject');
-      }}
-      whileTap={{ cursor: 'grabbing' }}
-    >
-      <motion.div className="w-full h-full absolute top-0 left-0 rounded-2xl" style={{ background }} />
+    <div className="w-full h-full absolute cursor-grab active:cursor-grabbing">
       <Card className="w-full h-full overflow-hidden shadow-lg relative bg-white bg-opacity-90">
         <CardHeader className="text-2xl font-bold flex justify-between items-center p-6">
           <span>{applicant.name}</span>
           <a href={`https://${applicant.linkedin}`} target="_blank" rel="noopener noreferrer">
-            <Linkedin className="h-6 w-6 text-blue-600" />
+            <svg className="h-6 w-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.25c-.97 0-1.75-.78-1.75-1.75s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.75-1.75 1.75zm13.5 11.25h-3v-5.5c0-1.38-.56-2.5-2-2.5s-2 1.12-2 2.5v5.5h-3v-10h3v1.5c.44-.66 1.34-1.5 2.5-1.5 2.21 0 3.5 1.79 3.5 4v6z"/>
+            </svg>
           </a>
         </CardHeader>
         <CardContent className="p-6 space-y-4">
@@ -109,42 +59,33 @@ const ApplicantCard = ({ applicant, onReview, direction }) => {
           >
             {showDetails ? 'Hide Details' : 'Show Details'}
           </Button>
-          <AnimatePresence>
-            {showDetails && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-3 text-base overflow-hidden"
-              >
-                <p className="flex items-center"><User className="mr-3 h-5 w-5" /> {applicant.bio}</p>
-                <p className="flex items-center"><TrendingUp className="mr-3 h-5 w-5" /> {applicant.traction}</p>
-                <p className="flex items-center"><DollarSign className="mr-3 h-5 w-5" /> {applicant.ask}</p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {showDetails && (
+            <div className="space-y-3 text-base overflow-hidden">
+              <p className="flex items-center"><span className="mr-3 h-5 w-5">👤</span> {applicant.bio}</p>
+              <p className="flex items-center"><span className="mr-3 h-5 w-5">📈</span> {applicant.traction}</p>
+              <p className="flex items-center"><span className="mr-3 h-5 w-5">💵</span> {applicant.ask}</p>
+            </div>
+          )}
         </CardContent>
         <CardFooter className="justify-between p-6 absolute bottom-0 left-0 right-0 bg-white bg-opacity-75">
           <Button onClick={() => onReview('reject')} variant="outline" className="flex items-center text-lg">
-            <ThumbsDown className="mr-2 h-5 w-5" /> Pass
+            <span className="mr-2 h-5 w-5">👎</span> Pass
           </Button>
           <Button onClick={() => onReview('skip')} variant="outline" className="flex items-center text-lg">
-            <ChevronsRight className="mr-2 h-5 w-5" /> Maybe
+            <span className="mr-2 h-5 w-5">➡️</span> Maybe
           </Button>
           <Button onClick={() => onReview('approve')} variant="outline" className="flex items-center text-lg">
-            <ThumbsUp className="mr-2 h-5 w-5" /> Interested
+            <span className="mr-2 h-5 w-5">👍</span> Interested
           </Button>
         </CardFooter>
       </Card>
-    </motion.div>
+    </div>
   );
 };
 
 const VCApplicantReviewApp = () => {
   const [applicants, setApplicants] = useState(mockApplicants);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
   const [reviewed, setReviewed] = useState({ approved: [], rejected: [], skipped: [] });
 
   const handleReview = (action) => {
@@ -154,7 +95,6 @@ const VCApplicantReviewApp = () => {
       [action === 'approve' ? 'approved' : action === 'reject' ? 'rejected' : 'skipped']: 
         [...prev[action === 'approve' ? 'approved' : action === 'reject' ? 'rejected' : 'skipped'], currentApplicant]
     }));
-    setDirection(action === 'approve' ? -1 : 1);
     setCurrentIndex(prevIndex => prevIndex + 1);
   };
 
@@ -175,14 +115,11 @@ const VCApplicantReviewApp = () => {
     <div className="p-4 h-screen flex flex-col bg-gradient-to-br from-blue-50 to-purple-50">
       <h1 className="text-3xl font-bold mb-6 text-center">VC Applicant Review</h1>
       <div className="flex-grow relative">
-        <AnimatePresence initial={false} custom={direction}>
-          <ApplicantCard 
-            key={currentIndex}
-            applicant={applicants[currentIndex]} 
-            onReview={handleReview}
-            direction={direction}
-          />
-        </AnimatePresence>
+        <ApplicantCard 
+          key={currentIndex}
+          applicant={applicants[currentIndex]} 
+          onReview={handleReview}
+        />
       </div>
       <div className="mt-6 text-center text-lg text-gray-500">
         {currentIndex + 1} of {applicants.length}
