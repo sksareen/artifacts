@@ -53,6 +53,7 @@
     ]
   },
   "devDependencies": {
-    "html-loader": "^5.1.0"
+    "html-loader": "^5.1.0",
+    "react-app-rewired": "^2.2.1"
   }
 }
