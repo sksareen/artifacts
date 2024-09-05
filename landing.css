@@ -207,25 +207,48 @@ p {
 /* Buttons */
 .cta-btn {
   display: inline-block;
-  padding: calc(var(--spacing-unit) * 2.5) calc(var(--spacing-unit) * 5);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   font-family: var(--special-font);
+  letter-spacing: 0.05em;
   text-decoration: none;
   text-align: center;
   border-radius: 30px;
   transition: all 0.3s ease;
   cursor: pointer;
+  color: var(--light-text-color);
+  border: none;
+  box-shadow: 0 8px 10px rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
+  margin: calc(var(--spacing-unit) * 1); /* Further adjust margin for very small screens */
+  width: 250px;
+  max-width: 100%;
+}
+
+.cta-title {
+  font-size: 1.8rem;
+}
+
+.cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.cta-btn.primary {
   background: linear-gradient(
     45deg,
     var(--primary-color),
     var(--secondary-color)
   );
-  color: var(--light-text-color);
-  border: none;
-  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.55);
-  position: relative;
-  overflow: hidden;
+}
+
+.cta-btn.secondary {
+  background: white;
+  color: rgb(74, 74, 74);
 }
 
 .cta-btn:before {
@@ -249,8 +272,8 @@ p {
 }
 
 .cta-btn:hover {
-  transform: translateY(-3px) scale(1.09);
-  box-shadow: 0 6px 60px rgba(255, 255, 255, 0.9);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.6);
 }
 
 /* Features Section */
@@ -437,6 +460,7 @@ textarea:focus {
   width: 100%;
   align-items: center;
   justify-content: center;
+  letter-spacing: 0.03em;
   margin: 40px 0;
 }
 
@@ -513,8 +537,8 @@ textarea:focus {
   }
 
   .cta-btn {
-    padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
-    font-size: 0.9rem;
+    padding: 10px 20px;
+    margin: calc(var(--spacing-unit) * 1); /* Adjust margin for smaller screens */
   }
 
   .cta-title {
@@ -575,14 +599,5 @@ textarea:focus {
 
   .cursor {
     font-size: 1.4rem;
-  }
-
-  .cta-btn {
-    padding: calc(var(--spacing-unit) * 1.2) calc(var(--spacing-unit) * 2.5);
-    font-size: 0.8rem;
-  }
-
-  .cta-title {
-    font-size: 1.8rem;
   }
 }

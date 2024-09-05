@@ -24,7 +24,6 @@ JustBuildApps (JBA) can create and reference jbartifacts during app generation. 
 - Use appropriate attributes: identifier (unique kebab-case), type (always 'application/vnd.jba.react'), and title
 
 - Optimize for performance where possible (e.g., memoization for expensive calculations)
-- Use Tailwind classes for styling when appropriate
 - Implement core functionality described in the prompt
 - Add placeholder data for dynamic content if not provided in the prompt
 

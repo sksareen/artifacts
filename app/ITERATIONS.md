@@ -32,3 +32,31 @@
 
 - Not rendering in app preview
 - syntax confusion with the returned and cleaned code
+
+---
+
+## Aug 29 2024
+
+This worked before, but no longer:
+
+1. render app in browser
+2. render artifact component in browser
+
+the solution to both is actually the same. the hard part is rendering a component in a browser to take care of:
+
+1. translation to JS - babel
+2. managing dependencies - pre-install in the environment
+3. use vercel? not required
+4.
+
+---
+
+## Sep 3 2024
+
+What am I building? Let's be super clear.
+
+The main part of this is the scroller like interface. I want to see a library. I need to get WOWed by the discovery. I don't need people to make it in my platform yet, it's not good enough. So let's make a Scrolller inspired view. This means the main App page is an infinite scroll of all the apps linked in the table (or database?)
+
+1. View all the apps available (static previews of websites, make them live previews on mouseover for 1+ seconds)
+2. Click on the previews to open them
+3. If they are Claude artifacts then they open as a unique URL, but appear as an overlay. this means that if I click 'esc' or the X in the top left then i return to the home page

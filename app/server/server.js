@@ -4,7 +4,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const Anthropic = require('@anthropic-ai/sdk');
-const { JBA_ARTIFACT_PROMPT } = require('./aiConfig');
 const fs = require('fs');
 const path = require('path');
 
@@ -43,11 +42,6 @@ app.post('/api/generate-app', async (req, res) => {
   const { prompt } = req.body;
   console.log('Received prompt:', prompt);
 
-  res.writeHead(200, {
-    'Content-Type': 'text/plain', // Change this to plain text
-    'Connection': 'keep-alive'
-  });
-
   try {
     if (!process.env.ANTHROPIC_API_KEY) {
       throw new Error('ANTHROPIC_API_KEY is not set in the environment');
@@ -64,8 +58,8 @@ app.post('/api/generate-app', async (req, res) => {
       try {
         const stream = await anthropic.messages.create({
           model: "claude-3-5-sonnet-20240620",
-          max_tokens: 2000,
-          temperature: 0.2,
+          max_tokens: 8000,
+          temperature: 0.1,
           system: systemPrompt.systemPrompt,
           messages: [{
             role: "user",
@@ -78,7 +72,8 @@ app.post('/api/generate-app', async (req, res) => {
             Do not use any other export method. 
             Do not use 'export const App = ...' as it may not be correctly recognized.
             The entire component, including imports and exports, must be wrapped in <jbartifact> tags.
-            No part of your response should be outside the <jbartifact> tags`
+            No part of your response should be outside the <jbartifact> tags
+            act like a 100x front end engineer and make it look good`
           }],
           stream: true,
         });
@@ -99,20 +94,20 @@ app.post('/api/generate-app', async (req, res) => {
         }
       } catch (apiError) {
         console.error('API Error:', apiError.message);
-        res.end(JSON.stringify({ error: apiError.message }));
+        res.status(500).json({ error: apiError.message });
         return;
       }
     }
 
     if (!isValidCode) {
-      res.end('Failed to generate valid code after multiple attempts.');
+      res.status(400).json({ error: 'Failed to generate valid code after multiple attempts.' });
     } else {
-      res.end(generatedCode); // Send the generated code directly
+      res.json({ code: generatedCode });
     }
 
   } catch (error) {
     console.error('Error generating app code:', error);
-    res.end('An error occurred while generating the app code.');
+    res.status(500).json({ error: 'An error occurred while generating the app code.' });
   }
 });
 

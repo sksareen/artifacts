@@ -1,106 +1,179 @@
-/* Base styling for the app */
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;700&family=Poppins:wght@300;400;700&family=Outfit:wght@300;400;700&display=swap');
+
+.jba-app-wrapper {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
   color: #1a1f36;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* Styling for the app logo */
-.App-logo {
-  height: 60px;
-  pointer-events: none;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
-  transition: transform 0.3s ease;
+.jba-app-wrapper main {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  height: 100%;
 }
 
-.App-logo:hover {
-  transform: translateY(-2px);
+.jba-app-wrapper .chat-container, 
+.jba-app-wrapper .preview-container {
+  flex: 1;
+  padding: .5rem;
+  border-radius: 5px;
 }
 
-/* Animation for the app logo */
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
-}
-
-/* Styling for the app header */
-.App-header {
+.jba-app-wrapper .chat-interface {
   display: flex;
   flex-direction: column;
+  height: 70%;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #f6f9fc;
-  padding: 40px;
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-/* Styling for the app links */
-.App-link {
-  color: #635bff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  padding: 8px 16px;
-  border-radius: 20px;
-}
-
-.App-link:hover {
-  color: #ffffff;
-  background-color: #635bff;
-}
-
-/* Keyframes for logo float animation */
-@keyframes App-logo-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-/* Styling for server status container */
-.server-status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #425466;
-  margin-top: 30px;
-  padding: 16px 24px;
   background-color: #ffffff;
-  border-radius: 12px;
+  border: 1px solid #e3e8ee;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 2rem;
+  margin: 0 auto;
+  }
+
+.jba-app-wrapper .message-list {
+  flex: 1;
+  overflow-y: auto;
 }
 
-.server-status:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+.jba-app-wrapper .message {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
 }
 
-/* Center everything in the preview container */
-#root {
+.jba-app-wrapper .message.user {
+  background-color: #e6f2ff;
+  align-self: flex-end;
+}
+
+.jba-app-wrapper .message.ai {
+  background-color: #f0f0f0;
+  align-self: flex-start;
+}
+
+.jba-app-wrapper .form-container {
   display: flex;
-  justify-content: center;
+  margin-top: 1rem;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f6f9fc;
 }
 
-/* Responsive design */
+.jba-app-wrapper input {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #e3e8ee;
+}
+
+.jba-app-wrapper button {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #61dafb, #4CAF50);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+  font-weight: 600;
+}
+
+.jba-app-wrapper button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #4CAF50, #61dafb);
+}
+
+.jba-app-wrapper .error {
+  color: red;
+  margin-bottom: 1rem;
+}
+
+.jba-app-wrapper .loading {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.jba-app-wrapper .modifications {
+  margin-top: 1rem;
+}
+
+.jba-app-wrapper .modification-input {
+  display: flex;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+.jba-app-wrapper .modification-input input {
+  flex: 1;
+  margin-right: 0.5rem;
+  border-radius: 5px;
+}
+
+.jba-app-wrapper .save-share {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+.jba-app-wrapper .save-share button {
+  padding: 0.5rem 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.4s ease;
+}
+
+.jba-app-wrapper .save-share button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  background-color: #0a2540;
+}
+
+.jba-app-wrapper .copy-feedback {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.jba-app-wrapper .copy-feedback.show {
+  opacity: 1;
+}
+
 @media (max-width: 768px) {
-  .App {
+  .jba-app-wrapper {
     padding: 0 10px;
   }
-  
-  .App-header {
-    padding: 20px;
+
+  .jba-app-wrapper .chat-interface {
+    padding: 1rem;
   }
-  
-  .server-status {
-    padding: 12px 18px;
+
+  .jba-app-wrapper .message-list {
+    max-height: 300px;
+  }
+
+  .jba-app-wrapper .message {
+    padding: 0.5rem;
+  }
+
+  .jba-app-wrapper input,
+  .jba-app-wrapper button {
+    font-size: 14px;
   }
 }

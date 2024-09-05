@@ -24,6 +24,7 @@ Overall, this code demonstrates the use of an error boundary in a React applicat
 import React from "react";
 // import Layout from "./components/Layout";
 import ChatInterface from "./components/ChatInterface";
+import './App.css';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -50,9 +51,9 @@ class ErrorBoundary extends React.Component {
 function App() {
   return (
     <ErrorBoundary>
-      <div className="App">
-        <ChatInterface />
-      </div>
+        <div className="App">
+          <ChatInterface />
+        </div>
     </ErrorBoundary>
   );
 }
